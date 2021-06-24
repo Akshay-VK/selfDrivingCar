@@ -8,7 +8,7 @@ class Ray{
 		fill(255)
 		stroke(255);
 		strokeWeight(3);
-		line(this.pos.x, this.pos.y, this.pos.x+this.angle.x*10, this.pos.y+this.angle.y*10);
+		line(this.pos.x, this.pos.y, this.pos.x+this.angle.x*100, this.pos.y+this.angle.y*100);
 	}
 
 	cast(wall, render){
