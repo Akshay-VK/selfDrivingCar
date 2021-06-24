@@ -9,6 +9,7 @@ var rays = [];
 function setup(){
 	createCanvas(600,400);
 	car = new Car(100, 100, 50, 100, 0);
+
 	bounds.push(new Bound(0,0,width,0));
 	bounds.push(new Bound(0,0,0,height));
 	bounds.push(new Bound(width,0,width,height));
@@ -32,7 +33,6 @@ function draw(){
 
 	for(var i = 0; i < rays.length; i++){
 		rays[i].raycast(bounds,true);
-		rays[i].show();
 		rays[i].pos.x = mouseX;
 		rays[i].pos.y = mouseY;
 	}

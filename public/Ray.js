@@ -41,18 +41,24 @@ class Ray{
 	}
 
 	raycast(walls, render){
-		//loop through all wall
-		//if exists and lesser than  biggest..
-		//do stuff
-		var smallest = Infinity;
-		var smallestVal;
-		for(var i = 0 ; i < walls.length; i++) {
-			var currentCast = this.cast(walls[i], false);
-			var currentDist = dist(this.pos.x, this.pos.y, currentCast.x, currentCast.y);
-			if(currentDist < smallest){
-				smallest = currentDist;
-				smallestVal = currentCast;
+		var bPos = createVector(this.pos.x, this.pos.y);
+		var d = Infinity;
+		for(var i = 0; i < walls.length; i++){
+			var cc = this.cast(walls[i], false);
+			if(cc){
+				var cd = dist(this.pos.x,this.pos.y,cc.x,cc.y);
+				if(cd < d){
+					d = cd;
+					bPos = cc;
+				}
+
 			}
+		}
+		if(render){
+			fill(255);
+			stroke(255);
+			strokeWeight(1);
+			line(this.pos.x,this.pos.y,bPos.x,bPos.y);
 		}
 	}
 }
