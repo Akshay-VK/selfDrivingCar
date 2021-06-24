@@ -4,11 +4,15 @@ class Ray{
 		this.angle = createVector(angleX,angleY);
 	}
 	
-	show(){
+	show(flat){
 		fill(255)
 		stroke(255);
 		strokeWeight(3);
-		line(this.pos.x, this.pos.y, this.pos.x+this.angle.x*100, this.pos.y+this.angle.y*100);
+		if(!flat){
+			line(this.pos.x, this.pos.y, this.pos.x+this.angle.x*100, this.pos.y+this.angle.y*100);
+		}else{
+			line(this.pos.x, this.pos.y, 100,100);
+		}
 	}
 
 	cast(wall, render){
