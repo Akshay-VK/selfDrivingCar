@@ -7,20 +7,18 @@ class Car{
 		//  \_|_/
 		//__|   |__
 		//  |___|
-		// /  | \
-		this.t = new Ray(cos(angle-22.5),sin(angle-22.5));
-		console.log(this.t);
+		//
+		this.t = new Ray(p5.Vector.fromAngle(radians(angle)).x,p5.Vector.fromAngle(radians(angle)).y);
 	}
 
 	update(){
 		this.angle += 1;	
-
-		this.t.angle.x = cos(this.angle-22.5);
-		this.t.angle.y = sin(this.angle-22.5);
+		this.t.angle.x = p5.Vector.fromAngle(radians(this.angle)).x;
+		this.t.angle.y = p5.Vector.fromAngle(radians(this.angle)).y;
 	}
 
 	raycast(walls,render){
-		this.t.raycast(walls,render);
+		this.t.raycast(walls,render,true);
 	}
 	cast(wall,render){
 		this.t.cast(wall,render);
@@ -33,9 +31,9 @@ class Car{
 		push();
 		translate(this.pos.x, this.pos.y)
 		rotate((PI/180)*this.angle);
-		fill(255);
+		fill(255,255,255,0);
 		strokeWeight(3);
-		this.t.show(true);
+		this.t.raycast(true);
 		rectMode(CENTER);
 		rect(0,0,this.width, this.height);
 		pop();

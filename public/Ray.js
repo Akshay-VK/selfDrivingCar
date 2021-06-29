@@ -11,7 +11,7 @@ class Ray{
 		if(!flat){
 			line(this.pos.x, this.pos.y, this.pos.x+this.angle.x*100, this.pos.y+this.angle.y*100);
 		}else{
-			line(this.pos.x, this.pos.y, 100,100);
+			line(0, 0, 100,100);
 		}
 	}
 
@@ -44,7 +44,7 @@ class Ray{
 		}
 	}
 
-	raycast(walls, render){
+	raycast(walls, render, flat){
 		var bPos = createVector(this.pos.x, this.pos.y);
 		var d = Infinity;
 		for(var i = 0; i < walls.length; i++){
@@ -62,7 +62,11 @@ class Ray{
 			fill(255);
 			stroke(255);
 			strokeWeight(1);
-			line(this.pos.x,this.pos.y,bPos.x,bPos.y);
+			if(!flat){
+				line(this.pos.x,this.pos.y,bPos.x,bPos.y);
+			}else{
+				line(0,0,d,0);
+			}
 		}
 	}
 }

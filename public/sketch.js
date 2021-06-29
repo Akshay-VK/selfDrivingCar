@@ -17,24 +17,26 @@ function setup(){
 	bounds.push(new Bound(150, 150, 150, 250));
 	bounds.push(new Bound(100, 150,100, 250));
 	bounds.push(new Bound(250, 150, 250, 250));
-	// for(var i = 0; i < 180; i+=0.5){
-	// 	rays.push(new Ray(400, 200, cos(i*2), sin(i*2)));
-	// }
+
+	for(var i = 0; i < 180; i+=0.5){
+		rays.push(new Ray(400, 200, cos(i*2), sin(i*2)));
+	}
 }
 function draw(){
 	background(0);
 
-	car.raycast(bounds,true);
 	car.update();
 	car.show();
-	
+	car.raycast(bounds,true);
+
+
 	for(var i = 0; i < bounds.length; i++){
 		bounds[i].show();
 	}
 
-	// for(var i = 0; i < rays.length; i++){
-	// 	rays[i].raycast(bounds,true);
-	// 	rays[i].pos.x = mouseX;
-	// 	rays[i].pos.y = mouseY;
-	// }
+	for(var i = 0; i < rays.length; i++){
+		rays[i].raycast(bounds,true);
+		rays[i].pos.x = mouseX;
+		rays[i].pos.y = mouseY;
+	}
 }
