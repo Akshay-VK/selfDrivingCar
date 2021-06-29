@@ -7,8 +7,8 @@ var bounds = [];
 var rays = [];
 
 function setup(){
-	createCanvas(600,400);
-	car = new Car(100, 100, 50, 100, 0);
+	createCanvas(800,600);
+	car = new Car(300, 200, 25, 50, 0);
 
 	bounds.push(new Bound(0,0,width,0));
 	bounds.push(new Bound(0,0,0,height));
@@ -35,8 +35,20 @@ function draw(){
 	}
 
 	for(var i = 0; i < rays.length; i++){
-		rays[i].raycast(bounds,true);
-		rays[i].pos.x = mouseX;
-		rays[i].pos.y = mouseY;
+		//rays[i].raycast(bounds,true);
+		//rays[i].pos.x = mouseX;
+		//rays[i].pos.y = mouseY;
+	}
+	if(keyIsDown(LEFT_ARROW)){
+		car.dir.x -= 0.5;
+	}
+	if(keyIsDown(RIGHT_ARROW)){
+		car.dir.x += 0.5;
+	}
+	if(keyIsDown(UP_ARROW)){
+		car.dir.y -= 0.5;
+	}
+	if(keyIsDown(DOWN_ARROW)){
+		car.dir.y += 0.5;
 	}
 }

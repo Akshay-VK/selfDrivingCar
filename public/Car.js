@@ -1,41 +1,66 @@
 class Car{
 	constructor(x, y, width, height, angle){
+		angleMode(DEGREES);
 		this.pos = createVector(x,y);
 		this.width = width;
 		this.height = height;
+		this.smallest = min(this.width,this.height);
 		this.angle = angle;
+		this.dir = createVector(0,0);
 		//  \_|_/
 		//__|   |__
 		//  |___|
 		//
-		this.t = new Ray(p5.Vector.fromAngle(radians(angle)).x,p5.Vector.fromAngle(radians(angle)).y);
+		var head = this.dir.heading();
+		this.rays = [];
+		for(var i = -90; i <= 90;i+=45){
+			this.rays.push(new Ray(this.pos.x,this.pos.y,0,0));
+			this.rays[this.rays.length-1].setAngle(head+i);
+		}
+		this.l = new Ray(this.pos.x,this.pos.y,0,0);
+		this.l.setAngle(head-90);
+
 	}
 
 	update(){
-		this.angle += 1;	
-		this.t.angle.x = p5.Vector.fromAngle(radians(this.angle)).x;
-		this.t.angle.y = p5.Vector.fromAngle(radians(this.angle)).y;
+		angleMode(DEGREES);
+
+		this.pos.x += this.dir.x;
+		this.pos.y += this.dir.y;
+
+		this.dir.x *= 0.9;
+		this.dir.y *= 0.9;
+
+		this.angle = this.dir.heading();
+		//this.angleX = p5.Vector.fromAngle(this.angle).x;
+		//this.angleY = p5.Vector.fromAngle(this.angle).y;
+		for(var i = -90;i <= 90; i += 45){
+			this.rays[(i+90)/45].setAngle(this.dir.heading()+i);
+			this.rays[(i+90)/45].pos = this.pos;
+		}
+		this.l.setAngle(this.dir.heading()-90);
+		this.l.pos = this.pos;
 	}
 
-	raycast(walls,render){
-		this.t.raycast(walls,render,true);
-	}
-	cast(wall,render){
-		this.t.cast(wall,render);
+	raycast(bounds,render){
+		for(var i = 0; i < this.rays.length;i++){
+			var res = this.rays[i].raycast(bounds,render,true);
+			if(res <= this.smallest/2){
+				console.log('collided');
+			}
+		}
+		//this.l.raycast(bounds,render);
 	}
 
 	show(){
-
-		//console.log('reacing?');
-
+		angleMode(DEGREES);
 		push();
-		translate(this.pos.x, this.pos.y)
-		rotate((PI/180)*this.angle);
-		fill(255,255,255,0);
-		strokeWeight(3);
-		this.t.raycast(true);
+		translate(this.pos.x,this.pos.y);
+		rotate(this.angle+90);
 		rectMode(CENTER);
-		rect(0,0,this.width, this.height);
+		fill(127);
+		rect(0,0,this.width,this.height);
 		pop();
+
 	}
 }
