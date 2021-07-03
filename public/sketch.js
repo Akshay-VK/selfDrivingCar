@@ -40,15 +40,15 @@ function draw(){
 		//rays[i].pos.y = mouseY;
 	}
 	if(keyIsDown(LEFT_ARROW)){
-		car.dir.x -= 0.5;
+		car.changeDirX(-0.5);
 	}
 	if(keyIsDown(RIGHT_ARROW)){
-		car.dir.x += 0.5;
+		car.changeDirX(0.5);
 	}
 	if(keyIsDown(UP_ARROW)){
-		car.dir.y -= 0.5;
+		car.changeDirY(-0.5);
 	}
 	if(keyIsDown(DOWN_ARROW)){
-		car.dir.y += 0.5;
+		car.changeDirY(0.5);
 	}
 }
