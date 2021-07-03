@@ -65,6 +65,7 @@ class Car{
 				}
 			}
 			//this.l.raycast(bounds,render);
+		}
 	}
 
 	show(){
