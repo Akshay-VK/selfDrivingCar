@@ -1,5 +1,5 @@
 class Car{
-	constructor(x, y, width, height, angle){
+	constructor(x, y, width, height, angle, fg){
 		angleMode(DEGREES);
 		this.pos = createVector(x,y);
 		this.width = width;
@@ -20,6 +20,16 @@ class Car{
 		this.l = new Ray(this.pos.x,this.pos.y,0,0);
 		this.l.setAngle(head-90);
 		this.dead = false;
+
+		this.XWeights = [];
+		this.YWeights = [];
+	
+		if(fg){
+			for(var i = 0;i < this.rays.length;i++){
+				this.XWeights.push(Math.random()*2-1);
+				this.YWeights.push(Math.random()*2-1);
+			}
+		}
 	}
 
 	changeDirX(dirx){
@@ -56,13 +66,34 @@ class Car{
 		}
 	}
 
-	raycast(bounds,render){
+	calcDirs(dists){
 		if(!this.dead){
+			var a = dists[0]*this.XWeights[0];
+			var b = dists[0]*this.YWeights[0];
+			for(var i = 0; i < dists.length;i++){
+				a = (a+dists[i]*this.XWeights[i])/2;
+				b = (b+dists[i]*this.YWeights[i])/2;
+			}
+			return createVector(a,b);
+		}else{
+			return createVector(0,0);
+		}
+	}
+
+	raycast(bounds,render, ret){
+		if(!this.dead){
+			var rets = [];
 			for(var i = 0; i < this.rays.length;i++){
 				var res = this.rays[i].raycast(bounds,render,true);
 				if(res <= this.smallest/2){
 					this.dead = true;
 				}
+				if(ret){
+					rets.push(res);	
+				}
+			}
+			if(ret){
+				return rets;
 			}
 			//this.l.raycast(bounds,render);
 		}
