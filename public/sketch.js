@@ -29,23 +29,33 @@ function setup(){
 function draw(){
 	background(0);
 
+	var allDead = true;
 	for(var i = 0; i < cars.length;i++){
 		cars[i].update();
 		cars[i].show();
-		var res = cars[i].calcDirs(cars[i].raycast(bounds,true,true)).normalize();
+		var res = cars[i].calcDirs(cars[i].raycast(bounds,true,true));
+		if(!cars[i].dead){
+			allDead = false;
+		}
 		cars[i].changeDirX(res.x);
 		cars[i].changeDirY(res.y);
+	}
+	if(allDead){
+		cars = [];
+		for(var i = 0;i < 10;i++){
+			cars.push(new Car(300,200,25,50,0,true));
+		}
 	}
 
 	for(var i = 0; i < bounds.length; i++){
 		bounds[i].show();
 	}
 
-	for(var i = 0; i < rays.length; i++){
+	//for(var i = 0; i < rays.length; i++){
 		//rays[i].raycast(bounds,true);
 		//rays[i].pos.x = mouseX;
 		//rays[i].pos.y = mouseY;
-	}
+	//}
 	//if(keyIsDown(LEFT_ARROW)){
 	//	car.changeDirX(-0.5);
 	//}

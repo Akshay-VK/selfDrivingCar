@@ -74,7 +74,11 @@ class Car{
 				a = (a+dists[i]*this.XWeights[i])/2;
 				b = (b+dists[i]*this.YWeights[i])/2;
 			}
-			return createVector(a,b);
+			var res =  createVector(a,b);
+			res.x = constrain(res.x,-0.1,0.5);
+			res.y = constrain(res.y,-0.1,0.5);
+			res.normalize();
+			return res;
 		}else{
 			return createVector(0,0);
 		}
