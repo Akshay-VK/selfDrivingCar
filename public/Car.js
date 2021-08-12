@@ -1,6 +1,7 @@
 class Car{
 	constructor(x, y, width, height, angle, fg){
 		angleMode(DEGREES);
+		this.startPos=createVector(x,y);
 		this.pos = createVector(x,y);
 		this.width = width;
 		this.height = height;
@@ -30,6 +31,8 @@ class Car{
 				this.YWeights.push(Math.random()*2-1);
 			}
 		}
+		this.distanceMoved = createVector(0,0);
+		this.totalDistMoved=0;
 	}
 
 	changeDirX(dirx){
@@ -63,6 +66,9 @@ class Car{
 			}
 			this.l.setAngle(this.dir.heading()-90);
 			this.l.pos = this.pos;
+		}else{
+			this.distanceMoved = p5.createVector.sub(this.pos, this.startPos);
+			this.totalDistMoved = this.distanceMoved.mag();
 		}
 	}
 
@@ -80,7 +86,7 @@ class Car{
 			res.normalize();
 			return res;
 		}else{
-			return createVector(0,0);
+			return createVector(0.001,0.001);
 		}
 	}
 
@@ -103,13 +109,13 @@ class Car{
 		}
 	}
 
-	show(){
+	show(col){
 		angleMode(DEGREES);
 		push();
 		translate(this.pos.x,this.pos.y);
 		rotate(this.angle+90);
 		rectMode(CENTER);
-		fill(127);
+		fill(col);
 		rect(0,0,this.width,this.height);
 		pop();
 

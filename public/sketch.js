@@ -32,7 +32,7 @@ function draw(){
 	var allDead = true;
 	for(var i = 0; i < cars.length;i++){
 		cars[i].update();
-		cars[i].show();
+		cars[i].show(127);
 		var res = cars[i].calcDirs(cars[i].raycast(bounds,true,true));
 		if(!cars[i].dead){
 			allDead = false;
@@ -41,6 +41,17 @@ function draw(){
 		cars[i].changeDirY(res.y);
 	}
 	if(allDead){
+		var highestDist=0;
+		var highestDistIndex;
+		for(var i = 0;i < cars.length;i++){
+			if(highestDist<cars[i].totalDistMoved){
+				highestDist=cars[i].totalDistMoved;
+				highestDistIndex=i;
+			}
+		}
+		alert(cars[i]);
+		cars[i].show(255);
+		
 		cars = [];
 		for(var i = 0;i < 10;i++){
 			cars.push(new Car(300,200,25,50,0,true));
